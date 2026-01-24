@@ -2,17 +2,47 @@
 \usepackage{graphicx} % Required for inserting 
 \usepackage{amsmath,amsfonts,amssymb}
 \usepackage{float}
-\title{Minimal DFA's for Divisibility Testing}
+\usepackage{amsthm}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\title{Minimal DFA's for Divisibility Testing (LSB first)}
 \author{Jez Snelson \& Joshua Obayomi}
 \begin{document}
 \maketitle
 \section{Introduction}
 \section{Non-Distinguishability Criteria}
+% Declare function r_b(x) at some point
+% Declare distinguishability equivalence relation for divisibility by p ~_{d,p}
 \subsection{Initial ND Criteria}
+\begin{lemma}
+  % Define notation of x = val(Sx)
+  For all $Sx,Sy\in\Sigma^*$ $Sx=_{d,p}Sy$ if and only if\\
+  $\forall d\in\mathbb N$ $r_2(x)d+x\equiv0\iff r_2(x)d+y\equiv0$
+\end{lemma}
 \subsection{Revised ND Criteria}
-\subsubsection{Lemma: $a^{-1}$ exists mod $p$ if $a,p$ are coprime}
-\subsubsection{Proof Of Equivalence}
+\begin{lemma}
+  For all $\alpha\in\mathbb Z/p\mathbb Z$ there exists $\alpha^{-1}\in \mathbb Z/p\mathbb Z$ if $a,p$ are coprime and $a\neq0$
+\end{lemma}
+\begin{proof}
+If we pick $a$ and we have that $\alpha$ and $p$ are coprime we have by Bezout's identity we have that there exists integers $x$ and $y$ such that $\alpha x+py=1$ which implies that\\ 
+\[\alpha x+py\equiv\alpha x+0\equiv\alpha x\equiv1\text{   (mod }p)\]\\
+And so we take $\alpha^{-1}=x$ 
+\end{proof}
+\begin{lemma}
+$(r_2(x))^{-1}x\equiv (r_2(y))^{-1}y \text{  (mod p)}$ if and only if\\
+$\forall d\in\mathbb N$ $r_2(x)d+x\equiv0\iff r_2(x)d+y\equiv0$
+\end{lemma}
 \section{Equivalence Relation Classes}
+As we have shown our distinguishability equivalence relation $_{d,p}$ is equivalent to $r_2(y)x\equiv r_2(x)y \text{  (mod }p)$ and we want to construct our distinguishing set from this which leads us to.\\
+\begin{lemma}
+  The amount of equivalence classes under $=_{d,p}$ is exactly $p$\\
+  Also said as $|\{[Sx]_{d,p}|Sx\in\Sigma^*\}|=p$
+\end{lemma}
+\begin{proof}
+  Firstly since there is only $p$ possible values for the numbers to be congruent to mod as they are integers we have that the amount of equivalence classes is $\leq p$.\\
+  Now all we need to do is find $p$ possible equivalence classes so that 
+\end{proof}
+
 \section{Even Numbers}
 
 \end{document}
