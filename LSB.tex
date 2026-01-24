@@ -3,6 +3,7 @@
 \usepackage{amsmath,amsfonts,amssymb}
 \usepackage{float}
 \usepackage{amsthm}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
 \newtheorem{theorem}{Theorem}[section]
 \newtheorem{lemma}[theorem]{Lemma}
 \title{Minimal DFA's for Divisibility Testing (LSB first)}
@@ -15,9 +16,9 @@
 % Declare distinguishability equivalence relation for divisibility by p ~_{d,p}
 \subsection{Initial ND Criteria}
 \begin{lemma}
-  % Define notation of x = val(Sx)
-  For all $Sx,Sy\in\Sigma^*$ $Sx=_{d,p}Sy$ if and only if\\
-  $\forall d\in\mathbb N$ $r_2(x)d+x\equiv0\iff r_2(x)d+y\equiv0$
+  % Define notation of x = val(s_x)
+  The strings $s_x,s_y$ are non distinguishable if and only if\\
+  $\forall d\in\mathbb N$ $r_2(s_x)d+x\equiv0\iff r_2(s_y)d+y\equiv0$
 \end{lemma}
 \subsection{Revised ND Criteria}
 \begin{lemma}
@@ -29,18 +30,27 @@ If we pick $a$ and we have that $\alpha$ and $p$ are coprime we have by Bezout's
 And so we take $\alpha^{-1}=x$ 
 \end{proof}
 \begin{lemma}
-$(r_2(x))^{-1}x\equiv (r_2(y))^{-1}y \text{  (mod p)}$ if and only if\\
-$\forall d\in\mathbb N$ $r_2(x)d+x\equiv0\iff r_2(x)d+y\equiv0$
+  \label{2.3}
+ The strings $s_x,s_y$ are non distinguishable if and only if\\
+ $(r_2(s_x))^{-1}x\equiv (r_2(s_y))^{-1}y \text{  (mod p)}$
 \end{lemma}
 \section{Equivalence Relation Classes}
-As we have shown our distinguishability equivalence relation $_{d,p}$ is equivalent to $r_2(y)x\equiv r_2(x)y \text{  (mod }p)$ and we want to construct our distinguishing set from this which leads us to.\\
+As we have shown our distinguishability equivalence relation $_{d,p}$ is equivalent to $r_2(s_y)x\equiv r_2(s_x)y \text{  (mod }p)$ and we want to construct our distinguishing set from this which leads us to.\\
 \begin{lemma}
   The amount of equivalence classes under $=_{d,p}$ is exactly $p$\\
-  Also said as $|\{[Sx]_{d,p}|Sx\in\Sigma^*\}|=p$
+  Also said as $\Sigma^*/ND=p$
 \end{lemma}
 \begin{proof}
-  Firstly since there is only $p$ possible values for the numbers to be congruent to mod as they are integers we have that the amount of equivalence classes is $\leq p$.\\
-  Now all we need to do is find $p$ possible equivalence classes so that 
+  Firstly since there is only $p$ possible values for the numbers to be congruent to mod $p$ as they are integers we have that the amount of equivalence classes is $\leq p$.\\
+  Now all we need to do is find $p$ possible equivalence classes of distinguishability which will force it to be $p$.\\
+  Consider the strings of $0$ to $p-1$.\\
+  Prepend 0s to the start of these strings to make them all the same length so we have $r_2(s_x)=\alpha$ for all of them.\\
+  We then have that they are all distinct under $=_{d,p}$ as for any two such strings $s_x,s_y,x\neq y$  assuming they are non distinguishable we have by \ref{2.3} \\
+  \[(r_2(s_x))^{-1}x\equiv (r_2(s_y))^{-1}y \text{  (mod p)}\]
+  \[\alpha^{-1}x\equiv \alpha^{-1}y \text{  (mod p)}\]
+  \[x\equiv y \text{  (mod p)}\]
+  This forms a contradiction as we picked them to be distinct numbers between $0$ and $p-1$ and so they must all be distinguishable and hence in different equivalence classes.\\
+  Thus we have found $p$ distinct equivalence classes and so the amount of equivalence classes is exactly $p$.
 \end{proof}
 
 \section{Even Numbers}
