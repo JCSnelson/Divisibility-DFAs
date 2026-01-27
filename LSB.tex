@@ -2,6 +2,8 @@
 \usepackage{graphicx} % Required for inserting 
 \usepackage{amsmath,amsfonts,amssymb}
 \usepackage{float}
+\usepackage{tikz}
+\usetikzlibrary{automata, positioning, arrows.meta, fit, shapes.geometric}
 \usepackage{amsthm}
 \usepackage[colorlinks=true, allcolors=blue]{hyperref}
 \newtheorem{theorem}{Theorem}[section]
@@ -54,5 +56,79 @@ As we have shown our distinguishability equivalence relation $_{d,p}$ is equival
 \end{proof}
 
 \section{Even Numbers}
+Now we aim to extend our Minimal DFA's to work with even numbers specifically numbers of the form $2^\alpha p$ where $\alpha,p\in\mathbb N$ and p is odd.\\
+\subsection{Construction}
+We will construct a proposed minimal DFA 
+\subsubsection{Checking for Divisibility by 2$^\alpha$}
+\begin{tikzpicture}[shorten >=1pt, node distance=2cm, on grid, auto]
+   % First two states
+   \node[state, initial] (q0) {$q_0$};
+   \node[state] (q1) [right=of q0] {$q_1$};
+   
+   % The Dots (Ellipsis)
+   \node (dots) [right=of q1] {$\dots$};
+   
+   % Last two states
+   \node[state] (qn-1) [right=of dots] {$q_{\alpha-1}$};
+   \node[state, accepting] (qn) [right=of qn-1] {$q_\alpha$};
+
+   \node[state] (qd) [above=of dots] {$q_d$};
+
+   % Transitions
+   \path[->] 
+    (q0) edge node {0} (q1)
+    (q1) edge node {0} (dots)
+    (dots) edge node {0} (qn-1)
+    (qn-1) edge node {0} (qn)
+    (q0) edge node {1} (qd)
+    (q1) edge node {1} (qd)
+    (dots) edge node {1} (qd)
+    (qn-1) edge node {1} (qd);
+\end{tikzpicture}
+\\
+\begin{tikzpicture}[shorten >=1pt, node distance=2cm, on grid, auto]
+   % First two states
+   \node[state, initial] (q0) {$q_0$};
+   \node[state] (q1) [right=of q0] {$q_1$};
+   
+   % The Dots (Ellipsis)
+   \node (dots) [right=of q1] {$\dots$};
+   
+   % Last two states
+   \node[state] (qn-1) [right=of dots] {$q_{\alpha-1}$};
+
+   \node[state, accepting] (q_acc) [right=2.2cm of qn-1] {$q_{acc}$};
+   \node[draw, dashed, minimum width=4cm, minimum height=3cm, thick] (dfa2) [right=3.5cm of qn-1] {$M_{2,p}$};
+
+   \node[state] (qd) [above=of dots] {$q_d$};
+
+   % Transitions
+   \path[->] 
+    (q0) edge node {0} (q1)
+    (q1) edge node {0} (dots)
+    (dots) edge node {0} (qn-1)
+    (qn-1) edge node {0} (q_acc)
+    (q0) edge node {1} (qd)
+    (q1) edge node {1} (qd)
+    (dots) edge node {1} (qd)
+    (qn-1) edge node {1} (qd);
+\end{tikzpicture}
+\subsection{Proof of it working}
+\subsection{Reachability}
+% 2^\alpha to get to the start then the pick a number from the equivalence class to get to the state
+\subsection{Distinguishability}
+% Odd = in p machine
+% Even = in 2^\alpha machine
+% Prove any odd state has a string that makes it acceptable
+% Odd/Even vs Dead by string that accepts them
+% Even - Odd by 1 then string that accepts the state odd gets to
+% Even - Even by smallest accepting string 
+\begin{lemma}
+  For all $S_m$ $S_n$ in the states of $M_{2,2^\alpha p}$ we have that $S_m$ is distinguishable from $S_n$
+\end{lemma}
+\begin{proof}
+  We split $S_m$ and $S_n$ into cases based on which part of the DFA they are in we consider 3 cases for each of them being the dead state $q_d$, being any other state in the divisibility by $2^\alpha$ part $q_l, 0<l<\alpha-1$ or being any state in $M_{2,p}$.\\
+  
+\end{proof}
 
 \end{document}
