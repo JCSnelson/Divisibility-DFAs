@@ -24,6 +24,7 @@
 \end{lemma}
 \subsection{Revised ND Criteria}
 \begin{lemma}
+  \label{2.2}
   For all $\alpha\in\mathbb Z/p\mathbb Z$ there exists $\alpha^{-1}\in \mathbb Z/p\mathbb Z$ if $a,p$ are coprime and $a\neq0$
 \end{lemma}
 \begin{proof}
@@ -124,11 +125,23 @@ We will construct a proposed minimal DFA
 % Even - Odd by 1 then string that accepts the state odd gets to
 % Even - Even by smallest accepting string 
 \begin{lemma}
-  For all $S_m$ $S_n$ in the states of $M_{2,2^\alpha p}$ we have that $S_m$ is distinguishable from $S_n$
+  \label{4.1}
+  For all $q_m$ in the states of $M_{2,2^\alpha p}$ where $q_m\neq q_d$ we have that there exists a string $s_w$ such that running the string $w$ from $q_m$ we get to the accepting state.\\
 \end{lemma}
 \begin{proof}
-  We split $S_m$ and $S_n$ into cases based on which part of the DFA they are in we consider 3 cases for each of them being the dead state $q_d$, being any other state in the divisibility by $2^\alpha$ part $q_l, 0<l<\alpha-1$ or being any state in $M_{2,p}$.\\
-  
+  We split $q_m$ into cases based on which part of the DFA it is in we consider 2 cases.\\
+  Case 1: $q_m$ is in the $2^\alpha$ part of the dfa $0<m<\alpha-1$, if this is the case we have the trivial string of $s_w=0^{\alpha-m}$ which we can see will go to the accepting state.\\
+  Case 2: $q_m$ is a state in $M_{2,p}$ if this is the case we know that after running the string $s_w$ at the state the value will be $r_2(s_x)w+x$ and so all we need to do is find a string $s_w$ such that $w\equiv-(r_2(s_x))^{-1}x$ which we know we can find as $r_2(s_x)^{-1}$ must exist by \ref{2.2}
+\end{proof}
+\begin{lemma}
+  For all $q_m$ $q_n$ in the states of $M_{2,2^\alpha p}$ $m\neq n$ we have that $q_m$ is distinguishable from $Sqn$
+\end{lemma}
+\begin{proof}
+  We split $q_m$ and $q_n$ into cases based on which part of the DFA they are in we consider 3 cases for each of them being the dead state $q_d$, being any other state in the divisibility by $2^\alpha$ part $q_l, 0<l<\alpha-1$ or being any state in $M_{2,p}$.\\
+  Case 1: $q_m\neq q_d$ and $q_n=q_d$. In this case we have that the distinguishing string is the accepting string of $q_m$ which we know exists from \ref{4.1} with this $q_m$ will go to the accepting state and $q_n$ will stay at the dead state and so they are distinguishable.\\
+  Case 2: $q_m$ is in the $2^\alpha$ part of the dfa $0<m<\alpha-1$ and $q_n$ in the states of $M_{2,p}$, in this case for our distinguishing string we first take 1 which will take $q_m$ to $q_d$ and $q_n$ to another state in $M_{2,p}$ as no transitions leave the machine. We then take the rest of the distinguishing string to be the accepting string of the state $q_n$ goes to and then we have that the run on $q_n$ will be accepting and the run on $q_m$ will go to the dead state and stay there and so they are distinguishable.\\
+  Case 3: $q_m,q_n$ are both in the $2^\alpha$ part of the dfa $0<m,n<\alpha-1$, in this case the distinguishing string is $0^{\alpha-\max{m,n}}$ which will take the state the closest to the accepting state to the accepting state and leave the other state still in the $2^\alpha$ part of the DFA and so these states are distinguishable.\\
+  Case 4: $q_m,q_n$ are both in $M_{2,p}$ we know these states are all distinguishable from our construction of the machine using equivalence clases.\\
 \end{proof}
 
 \end{document}
