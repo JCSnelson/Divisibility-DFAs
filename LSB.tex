@@ -59,8 +59,9 @@ As we have shown our distinguishability equivalence relation $_{d,p}$ is equival
 \section{Even Numbers}
 Now we aim to extend our Minimal DFA's to work with even numbers specifically numbers of the form $2^\alpha p$ where $\alpha,p\in\mathbb N$ and p is odd.\\
 \subsection{Construction}
-We will construct a proposed minimal DFA 
+We will construct a proposed minimal DFA and prove that it works aswell as proving minimality.\\
 \subsubsection{Checking for Divisibility by 2$^\alpha$}
+Firstly it is easy to see that for checking if a binary string is divisible by $2^\alpha$ you only need to check the first $\alpha$ digits and so we can construct a DFA for that fairly easily.\\
 \begin{tikzpicture}[shorten >=1pt, node distance=2cm, on grid, auto]
    % First two states
    \node[state, initial] (q0) {$q_0$};
@@ -89,6 +90,7 @@ We will construct a proposed minimal DFA
     (qd) edge[loop right] node {0} (qd);
 \end{tikzpicture}
 \\
+Next we can construct a DFA as a joining of those two DFAs because if the first $\alpha$ digits are 0s that doesnt affect the divisibility by $p$.\\\\
 \begin{tikzpicture}[shorten >=1pt, node distance=2cm, on grid, auto]
    % First two states
    \node[state, initial] (q0) {$q_0$};
@@ -122,6 +124,10 @@ We will construct a proposed minimal DFA
 \begin{lemma}
   For any binary string $s_w$ the run of $s_w$ on $M_{2,2^\alpha p}$ is accepting if and only if $s_w$ is divisible by $2^\alpha p$
 \end{lemma}
+\begin{proof}
+  We know from our previous work that $M_{2,p}$ accepts a string $s_d$ if and only if the string is divisible by $p$.\\
+  All strings that are divisible by $2^\alpha p$ have the value of $2^\alpha d$ for any $s_d$ divisible by $p$ and because of this we can write any string divisible by $2^\alpha p$ as $s_w=0^\alpha \circ s_d$ for some $s_d$ divisible by $p$. If we partially calculate where the run on $M_{2,2^\alpha p}$ will end up at after processing $0^\alpha$ we get that it ends up at the start state (also the accepting state) of $M_{2,p}$ and then since $s_d$ is divisible by $p$ the run from the start state of $M_{2,p}$ will be accepting and so we have proven the machine for all $s_w$\\ 
+\end{proof}
 \subsection{Reachability}
 % 2^\alpha to get to the start then the pick a number from the equivalence class to get to the state
 \begin{lemma}
@@ -129,7 +135,7 @@ We will construct a proposed minimal DFA
 \end{lemma}
 \begin{proof}
   We split $q_m$ into cases based on which part of the DFA it is in, we consider 3 cases.\\
-  Case 1: $q_m$ is in the $2^\alpha$ part of the dfa $0\leq m \leq \alpha-1$ then the string is just $s_w=0^m$ and we know the run of this ends at $q_m$ by definition.\\
+  Case 1: $q_m$ is in the $2^\alpha$ part of the DFA $0\leq m \leq \alpha-1$ then the string is just $s_w=0^m$ and we know the run of this ends at $q_m$ by definition of the $2^{\alpha}$ part of the DFA.\\
   Case 2: $q_m=q_d$ in which case the string is $s_w=1$ and we can see the run of this ends at $q_d$\\
   Case 3: $q_m$ is a state in $M_{2,p}$ in which case we can construct $s_w$ by first taking the string $0^\alpha$ which will take us to the accepting state (also the start state of $M_{2,p}$) and then concatenating it with a string from the equivalence class of $q_m$ and so we can the run of this ends at $q_m$ by definition of $M_{2,p}$
 \end{proof}
