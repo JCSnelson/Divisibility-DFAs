@@ -8,20 +8,42 @@
 \usepackage[colorlinks=true, allcolors=blue]{hyperref}
 \newtheorem{theorem}{Theorem}[section]
 \newtheorem{lemma}[theorem]{Lemma}
+\theoremstyle{definition} 
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1em}
+\newtheorem{defn}{Definition}[section]
 \title{Minimal DFA's for Divisibility Testing (LSB first)}
 \author{Jez Snelson \& Joshua Obayomi}
 \begin{document}
 \maketitle
 \section{Introduction}
+% Talk about
 \section{Non-Distinguishability Criteria}
 % Declare function r_b(x) at some point
 % Declare distinguishability equivalence relation for divisibility by p ~_{d,p}
+In order to write this proof we have to define a way of working with binary strings $s_x\in\{0,1\}$ such that we can assign a value to them based on the Least Significant Bit first processing order.\\
+\begin{defn} 
+  We define the value of a binary string according to LSB first as\\
+  \[val(c_1\circ c_2\circ\dots\circ c_n)=2^0\times c_1+2^1\times c_2+\dots+2^{n-1}\times c_n\]
+\end{defn}
+We want to determine the minimal amount of states for Divisibility Testing a binary string by a number $p$. To start with we want to declare our alphabet $\{0,1\}$, in this paper we will denote binary strings as $s_x\in\{0,1\}^*$ and their corresponding values $x\in\mathbb N$ (also notated as $val(s_x)$). For our accepting criteria we have that $s_x$ is accepting if $val(s_x)=x\equiv 0\ \text{(mod } p)$\\ 
+In order to prove we have a minimal amount of states we rely on the Myhill Nerode Theorem and so the first thing we must do is reason with non distinguishability criteria.\\
+\begin{defn} 
+  We say that two strings $s_x,s_y$ are non distinguishable if and only if $\forall s_w \in \Sigma^*$ the run of $s_x\circ s_w$ is accepting if and only if the run of $s_y \circ s_w$ is accepting.\\
+\end{defn}
+And so with respect to our problem we have that two binary strings $s_x,s_y$ are non distinguishable if and only if  $\forall s_w \in \{0,1\}^*$ $val(s_x\circ s_w)\equiv 0 \iff val(s_x\circ s_w)\equiv 0$
 \subsection{Initial ND Criteria}
+\begin{defn}
+  We define the residue of a string with respect to a certain base to be 
+\end{defn}
 \begin{lemma}
   % Define notation of x = val(s_x)
-  The strings $s_x,s_y$ are non distinguishable if and only if\\
+  The binary strings $s_x,s_y$ are non distinguishable if and only if\\
   $\forall d\in\mathbb N$ $r_2(s_x)d+x\equiv0\iff r_2(s_y)d+y\equiv0$
 \end{lemma}
+\begin{proof}
+  
+\end{proof}
 \subsection{Revised ND Criteria}
 \begin{lemma}
   \label{2.2}
@@ -37,6 +59,9 @@ And so we take $\alpha^{-1}=x$ which fulfills our required properties
  The strings $s_x,s_y$ are non distinguishable if and only if\\
  $(r_2(s_x))^{-1}x\equiv (r_2(s_y))^{-1}y \text{  (mod p)}$
 \end{lemma}
+\begin{proof}
+  
+\end{proof}
 \section{Equivalence Relation Classes}
 As we have shown our distinguishability equivalence relation $_{d,p}$ is equivalent to $r_2(s_y)x\equiv r_2(s_x)y \text{  (mod }p)$ and we want to construct our distinguishing set from this which leads us to.\\
 \begin{lemma}
