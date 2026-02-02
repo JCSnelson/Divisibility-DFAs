@@ -24,25 +24,34 @@
 In order to write this proof we have to define a way of working with binary strings $s_x\in\{0,1\}$ such that we can assign a value to them based on the Least Significant Bit first processing order.\\
 \begin{defn} 
   We define the value of a binary string according to LSB first as\\
-  \[val(c_1\circ c_2\circ\dots\circ c_n)=2^0\times c_1+2^1\times c_2+\dots+2^{n-1}\times c_n\]
+  \[val(s_x)=val(c_1\circ c_2\circ\dots\circ c_n)=2^0\times c_1+2^1\times c_2+\dots+2^{n-1}\times c_n\ c_1,c_2,\dots,c_n\in\{0,1\}\]
 \end{defn}
 We want to determine the minimal amount of states for Divisibility Testing a binary string by a number $p$. To start with we want to declare our alphabet $\{0,1\}$, in this paper we will denote binary strings as $s_x\in\{0,1\}^*$ and their corresponding values $x\in\mathbb N$ (also notated as $val(s_x)$). For our accepting criteria we have that $s_x$ is accepting if $val(s_x)=x\equiv 0\ \text{(mod } p)$\\ 
 In order to prove we have a minimal amount of states we rely on the Myhill Nerode Theorem and so the first thing we must do is reason with non distinguishability criteria.\\
 \begin{defn} 
   We say that two strings $s_x,s_y$ are non distinguishable if and only if $\forall s_w \in \Sigma^*$ the run of $s_x\circ s_w$ is accepting if and only if the run of $s_y \circ s_w$ is accepting.\\
 \end{defn}
-And so with respect to our problem we have that two binary strings $s_x,s_y$ are non distinguishable if and only if  $\forall s_w \in \{0,1\}^*$ $val(s_x\circ s_w)\equiv 0 \iff val(s_x\circ s_w)\equiv 0$
+And so with respect to our problem we have that two binary strings $s_x,s_y$ are non distinguishable if and only if  $\forall s_w \in \{0,1\}^*$ $val(s_x\circ s_w)\equiv 0 \iff val(s_y\circ s_w)\equiv 0$
 \subsection{Initial ND Criteria}
 \begin{defn}
-  We define the residue of a string with respect to a certain base to be 
+  We define the residue of a string with respect to a certain base $b$ to be\\
+  \[r_b(s_x)=2^{|x|}\]
 \end{defn}
 \begin{lemma}
+  \label{2.1}
   % Define notation of x = val(s_x)
   The binary strings $s_x,s_y$ are non distinguishable if and only if\\
-  $\forall d\in\mathbb N$ $r_2(s_x)d+x\equiv0\iff r_2(s_y)d+y\equiv0$
+  $\forall w\in\mathbb N$ $r_2(s_x)w+x\equiv0\iff r_2(s_y)w+y\equiv0$
 \end{lemma}
 \begin{proof}
-  
+  We can work with the definition of the value function, if we have that $s_x=c_{s_x,1}\circ c_{s_x,2}\circ\dots\circ c_{s_x,|s_x|}$ $s_y=c_{s_y,1}\circ c_{s_y,2}\circ\dots\circ c_{s_y,|s_y|}$ then if we pick $s_w=c_{s_w,1}\circ c_{s_w,2}\circ\dots\circ c_{s_w,|s_w|}$ we get that if and only if they are non distinguishable then\\
+  \[val(s_x\circ s_w)\equiv 0 \iff val(s_x\circ s_w)\equiv 0\text{   (mod }p)\]
+  \[val(c_{s_x,1}\circ\dots\circ c_{s_x,|s_x|}\circ c_{s_w,1}\circ\dots\circ c_{s_w,|s_w|})\equiv 0\text{   (mod }p)\]\[ \iff val(c_{s_y,1}\circ \dots\circ c_{s_y,|s_y|}\circ c_{s_w,1}\dots\circ c_{s_w,|s_w|})\equiv 0\text{   (mod }p)\]
+  \[c_{s_x,1}+\dots+ 2^{|s_x|-1}c_{s_x,|s_x|}+ 2^{|s_x|}c_{s_w,1}+\dots+ 2^{|s_x|+|s_w|-1}c_{s_w,|s_w|}\equiv 0 \text{   (mod }p)\]\[\iff c_{s_y,1}+\dots+ 2^{|s_y|-1}c_{s_y,|s_y|}+ 2^{|s_y|}c_{s_w,1}+\dots+ 2^{|s_y|+|s_w|-1}c_{s_w,|s_w|}\equiv 0\text{   (mod }p)\]
+  We can then factor our $r_2(s_x)$ from the characters of $s_w$ to get\\
+  \[r_2(s_x)val(s_w)+val(s_x)\equiv0\iff r_2(s_y)val(s_w)+val(s_y)\equiv0\text{   (mod }p)\]
+  And finally replacing the values of single binary strings with their letters we get $w=val(s_w)\in\mathbb N$\\
+  \[r_2(s_x)w+x\equiv0\iff r_2(s_y)w+y\equiv0\text{   (mod }p)\]
 \end{proof}
 \subsection{Revised ND Criteria}
 \begin{lemma}
@@ -58,14 +67,20 @@ And so we take $\alpha^{-1}=x$ which fulfills our required properties
   \label{2.3}
  The strings $s_x,s_y$ are non distinguishable if and only if\\
  $(r_2(s_x))^{-1}x\equiv (r_2(s_y))^{-1}y \text{  (mod p)}$
+ Where $p$ is odd
 \end{lemma}
 \begin{proof}
-  
+  If we pick $w\in\mathbb N$ we have from \ref{2.1} that the strings $s_x, s_y$ are distinguishable if and only if\\
+  \[r_2(s_x)w+x\equiv0\iff r_2(s_y)w+y\equiv0\text{   (mod }p)\]
+  On both sides of the $\iff$ since $p$ is odd we have that $r_2(s_x)$ and $r_2(s_y)$ have inverses under $\text{(mod }p)$ and so we can divide through by them\\
+  \[w+(r_2(s_x))^{-1}x\equiv0\iff w+(r_2(s_y))^{-1}y\equiv0\text{   (mod }p)\]
+  \[(r_2(s_x))^{-1}x\equiv-w\iff (r_2(s_y))^{-1}y\equiv-w\text{   (mod }p)\]
+  \[(r_2(s_x))^{-1}x\equiv (r_2(s_y))^{-1}y \text{   (mod }p)\]
 \end{proof}
 \section{Equivalence Relation Classes}
 As we have shown our distinguishability equivalence relation $_{d,p}$ is equivalent to $r_2(s_y)x\equiv r_2(s_x)y \text{  (mod }p)$ and we want to construct our distinguishing set from this which leads us to.\\
 \begin{lemma}
-  The amount of equivalence classes under $=_{d,p}$ is exactly $p$\\
+  The amount of equivalence classes under the non distinguishability equivalence relation $=_{d,p}$ is exactly $p$\\
   Also said as $\Sigma^*/ND=p$
 \end{lemma}
 \begin{proof}
