@@ -205,5 +205,6 @@ Next we can construct a DFA as a joining of those two DFAs because if the first 
   Case 3: $q_m,q_n$ are both in the $2^\alpha$ part of the dfa $0\leq m,n\leq\alpha-1$, in this case the distinguishing string is $0^{\alpha-\max{m,n}}$ which will take the state the closest to the accepting state to the accepting state and leave the other state still in the $2^\alpha$ part of the DFA and so these states are distinguishable.\\
   Case 4: $q_m,q_n$ are both in $M_{2,p}$ we know these states are all distinguishable from our construction of the machine using equivalence clases.\\
 \end{proof}
+Finally since we have that our proposed machine $M_{2,2^\alpha p}$ works for testing divisibility and all states are reachable and pairwise distinguishable we have that it must be minimal and that the minimum amount of states for checking LSB first divisibility of a binary string by a number in the form $2^\alpha p$ is $p + \alpha + 1$
 
 \end{document}
